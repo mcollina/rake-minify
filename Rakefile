@@ -37,7 +37,7 @@ end
 require 'cucumber/rake/task'
 Cucumber::Rake::Task.new(:features)
 
-task :default => :spec
+task :default => [:spec, :features]
 
 require 'rake/rdoctask'
 Rake::RDocTask.new do |rdoc|
