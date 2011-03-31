@@ -4,6 +4,8 @@ require 'jsmin'
 
 class Rake::Minify < Rake::TaskLib
 
+  autoload :Source, "rake/minify/source"
+
   def initialize(&block)
     #@sources = Hash.new { |h, k| h[k] = [] }
     @sources = {}
@@ -23,21 +25,6 @@ class Rake::Minify < Rake::TaskLib
     @sources.each do |dest, source|
       Kernel.open(dest, "w") do |output|
         output << source.build
-      end
-    end
-  end
-
-  class Source
-    attr_reader :source, :minify
-
-    def initialize(source, minify)
-      @source = source
-      @minify = minify
-    end
-
-    def build
-      Kernel.open(source) do |input|
-        minify && JSMin.minify(input.read) || input.read
       end
     end
   end
