@@ -3,29 +3,42 @@ require 'erb'
 class Group
   attr_reader :sources
   attr_reader :output
-  attr_reader :minify
 
-  def initialize(output, minify)
+  def initialize(output)
     @output = output
     @sources = []
-    @minify = minify
+  end
+
+  def add(source, minify)
+    @sources << GroupElement.new(source, minify)
   end
 end
 
+GroupElement = Struct.new(:source, :minify)
+
 def groups
-  @groups ||= {}
+  @groups ||= Hash.new do |h, k|
+    h[k] = Group.new(k)
+  end
 end
 
 def add_to_groups(output, minify, file)
-  groups[output] ||= Group.new(output, minify)
-  groups[output].sources << file
+  groups[output].add(file, minify)
 end
 
 def generate_rakefile
   template = <<-EOF
 Rake::Minify.new do |conf|
   <% groups.values.each do |group| %>
-  conf.add(<%= group.output %>, <%= group.minify %>, <%= group.sources.inspect %>)
+    <% if group.sources.size == 1 %>
+      add(<%= group.output.inspect %>, <%= group.sources.first.source.inspect %>, :minify => <%= group.sources.first.minify %>)
+    <% else %>
+      group(<%= group.output.inspect %>) do |group|
+        <% group.sources.each do |element| %>
+          add(<%= group.sources.first.source.inspect %>, :minify => <%= group.sources.first.minify %>)
+        <% end %>
+      end
+    <% end %>
   <% end %>
 end
 EOF
