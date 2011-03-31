@@ -1,5 +1,5 @@
-
 require 'erb'
+
 class Group
   attr_reader :sources
   attr_reader :output
