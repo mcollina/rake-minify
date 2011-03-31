@@ -8,7 +8,9 @@ end
 
 When /^I run rake minify$/ do
   @dir = Dir.mktmpdir
-  FileUtils.cp_r(File.join(File.dirname(__FILE__), "..", "js-sources"), @dir)
+  Dir.glob(File.join(File.dirname(__FILE__), "..", "js-sources", "*")) do |file|
+    FileUtils.cp(file, @dir)
+  end
   rakefile = File.join(@dir, "Rakefile")
   open(rakefile, "w") { |io| io << generate_rakefile }
   
@@ -16,13 +18,15 @@ When /^I run rake minify$/ do
   Rake.application = application
   application.add_import(rakefile)
   application.load_imports
-  application["minify"].invoke
+  FileUtils.cd(@dir) do
+    application["minify"].invoke
+  end
 end
 
 Then /^"([^"]*)" should be minified$/ do |file|
   open(File.join(@dir, file)) do |result|
     open(File.join(File.dirname(__FILE__), "..", "js-expected", file)) do |expected|
-      result.read.should == exptected.read
+      (result.read + "\n").should == expected.read
     end
   end
 end

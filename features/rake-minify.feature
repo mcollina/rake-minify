@@ -27,3 +27,9 @@ Feature: Minify Javascripts
     When I run rake minify
     Then "app.min.js" should include "a.min.js" and "b.min.js"
     And "a.min.js" should be minified
+
+  Scenario: Combine and minify only one js file
+    Given we want to combine the js file "a.js" into "app.js"
+    And we want to minify the js file "b.js" into "app.js"
+    When I run rake minify
+    Then "app.js" should include "a.js" and "b.min.js"

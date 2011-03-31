@@ -31,7 +31,7 @@ def generate_rakefile
 Rake::Minify.new do |conf|
   <% groups.values.each do |group| %>
     <% if group.sources.size == 1 %>
-      add(<%= group.output.inspect %>, <%= group.sources.first.source.inspect %>, :minify => <%= group.sources.first.minify %>)
+      add(<%= group.output.inspect %>, <%= group.sources.first.source.inspect %>)
     <% else %>
       group(<%= group.output.inspect %>) do |group|
         <% group.sources.each do |element| %>
