@@ -23,7 +23,7 @@ class Rake::Minify < Rake::TaskLib
   end
 
   def group(output, &block)
-    @sources[build_path(output)] = Group.new &block
+    @sources[build_path(output)] = Group.new(self, &block)
   end
 
   def dir(dir, &block)

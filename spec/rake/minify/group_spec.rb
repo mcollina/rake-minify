@@ -3,7 +3,13 @@ require 'stringio'
 
 class Rake::Minify
   describe Group do
-    subject { Group.new }
+
+    let(:parent) { double("parent") }
+    subject { Group.new(parent) }
+
+    before(:each) do
+      parent.stub!(:build_path).and_return { |arg| arg }
+    end
 
     def build_source(source_name, minify, stubs = {})
       source = double("source", stubs)
@@ -41,7 +47,7 @@ class Rake::Minify
     it "should accept add inside the block passed to new" do
       s1 = build_source("a", false, :build => "aaaa");
 
-      subject = Group.new do
+      subject = Group.new(parent) do
         add("a", :minify => false)
       end
       
