@@ -11,6 +11,10 @@ describe Rake::Minify do
     io
   end
 
+  def do_invoke
+    subject.invoke
+  end
+
   context "configured to minify a single file" do
     subject do 
       Rake::Minify.new do
@@ -24,7 +28,7 @@ describe Rake::Minify do
     end
 
     it "should minify the input file when invoked" do
-      subject.invoke
+      do_invoke
       @output.string.should == "var a=\"b\";"
     end
   end
@@ -42,7 +46,7 @@ describe Rake::Minify do
     end
 
     it "should not minify the input file when invoked" do
-      subject.invoke
+      do_invoke
       @output.string.should == ' var a =     "b"   ;'
     end
   end
@@ -64,7 +68,7 @@ describe Rake::Minify do
     end
 
     it "should minify and concatenate the inputs" do
-      subject.invoke
+      do_invoke
       @output.string.should == "var a=\"hello\";\nvar b=\"hello2\";"
     end
   end
@@ -84,16 +88,15 @@ describe Rake::Minify do
     end
 
     it "should minify the input file when invoked" do
-      subject.invoke
+      do_invoke
       @output.string.should == "var a=\"b\";"
     end
   end
 
   it "should accepts arguments" do
-    lambda {
-      Rake::Minify.new(:a_task) do
-        add("output", "source")
-      end
-    }.should_not raise_error
+    Rake::Task.should_receive(:define_task).with(:a_task)
+    Rake::Minify.new(:a_task) do
+      add("output", "source")
+    end
   end
 end

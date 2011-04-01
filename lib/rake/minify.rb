@@ -10,8 +10,7 @@ class Rake::Minify < Rake::TaskLib
   def initialize(name=:minify, &block)
     @sources = {}
     @dir = nil
-
-    instance_eval &block # to be configured like the pros
+    @config = block
 
     desc "Minifies the specified javascripts" unless Rake.application.last_comment
     task name do
@@ -34,6 +33,8 @@ class Rake::Minify < Rake::TaskLib
   end
 
   def invoke
+    instance_eval &@config # to be configured like the pros
+
     @sources.each do |dest, source|
       Kernel.open(dest, "w") do |output|
         output << source.build
