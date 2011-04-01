@@ -7,13 +7,14 @@ class Rake::Minify < Rake::TaskLib
   autoload :Source, "rake/minify/source"
   autoload :Group, "rake/minify/group"
 
-  def initialize(&block)
+  def initialize(name=:minify, &block)
     @sources = {}
     @dir = nil
 
     instance_eval &block # to be configured like the pros
 
-    task "minify" do
+    desc "Minifies the specified javascripts" unless Rake.application.last_comment
+    task name do
       invoke
     end
   end

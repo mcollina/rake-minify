@@ -28,7 +28,9 @@ end
 
 def generate_rakefile
   template = <<-EOF
-Rake::Minify.new do
+<%= pre.join("\n") %>
+
+Rake::Minify.new(<%= @name_for_generation %>) do
   <% if basedir.size > 0 %>
   dir(File.join(File.dirname(__FILE__), <%= basedir.inspect %>)) do
   <% end %> 
@@ -54,4 +56,26 @@ end
 
 def basedir(dir="")
   @basedir ||= dir
+end
+
+def run_task(task_name="minify")
+  @dir = Dir.mktmpdir
+  FileUtils.mkdir File.join(@dir, basedir) if basedir.size > 0
+  Dir.glob(File.join(File.dirname(__FILE__), "..", "js-sources", "*")) do |file|
+    FileUtils.cp(file, File.join(@dir, basedir))
+  end
+  rakefile = File.join(@dir, "Rakefile")
+  open(rakefile, "w") { |io| io << generate_rakefile }
+  
+  application = Rake::Application.new
+  Rake.application = application
+  application.add_import(rakefile)
+  application.load_imports
+  FileUtils.cd(@dir) do
+    application[task_name].invoke
+  end
+end
+
+def pre
+  @pre ||= []
 end

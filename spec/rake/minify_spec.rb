@@ -88,4 +88,12 @@ describe Rake::Minify do
       @output.string.should == "var a=\"b\";"
     end
   end
+
+  it "should accepts arguments" do
+    lambda {
+      Rake::Minify.new(:a_task) do
+        add("output", "source")
+      end
+    }.should_not raise_error
+  end
 end

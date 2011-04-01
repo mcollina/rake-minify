@@ -7,21 +7,7 @@ Given /^we want to minify the js file "([^"]*)" into "([^"]*)"$/ do |file, outpu
 end
 
 When /^I run rake minify$/ do
-  @dir = Dir.mktmpdir
-  FileUtils.mkdir File.join(@dir, basedir) if basedir.size > 0
-  Dir.glob(File.join(File.dirname(__FILE__), "..", "js-sources", "*")) do |file|
-    FileUtils.cp(file, File.join(@dir, basedir))
-  end
-  rakefile = File.join(@dir, "Rakefile")
-  open(rakefile, "w") { |io| io << generate_rakefile }
-  
-  application = Rake::Application.new
-  Rake.application = application
-  application.add_import(rakefile)
-  application.load_imports
-  FileUtils.cd(@dir) do
-    application["minify"].invoke
-  end
+  run_task
 end
 
 Then /^"([^"]*)" should be minified$/ do |file|
@@ -57,3 +43,16 @@ end
 Given /^the basedir "([^"]*)"$/ do |dir|
   basedir(dir)
 end
+
+Given /^I have configured rake to minify at the "([^"]*)" command$/ do |name|
+  @name_for_generation = name
+end
+
+When /^I run rake "([^"]*)"$/ do |task_name|
+  run_task task_name
+end
+
+Given /^I have a "([^"]*)" rake task$/ do |arg1|
+  pre << "task #{arg1} "
+end
+
