@@ -13,7 +13,7 @@ class Rake::Minify
     end
 
     def build
-      @sources.map { |s| s.build }.join('')
+      @sources.map { |s| s.build }.join("\n")
     end
   end
 end

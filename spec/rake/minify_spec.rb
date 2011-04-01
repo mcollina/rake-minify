@@ -65,7 +65,7 @@ describe Rake::Minify do
 
     it "should minify and concatenate the inputs" do
       subject.invoke
-      @output.string.should == "var a=\"hello\";var b=\"hello2\";"
+      @output.string.should == "var a=\"hello\";\nvar b=\"hello2\";"
     end
   end
 end

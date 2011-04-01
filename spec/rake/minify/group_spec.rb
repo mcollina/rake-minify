@@ -35,7 +35,7 @@ class Rake::Minify
 
       subject.add("a", :minify => false)
       subject.add("b")
-      subject.build.should == "aaaabbbb"
+      subject.build.should == "aaaa\nbbbb"
     end
 
     it "should accept add inside the block passed to new" do
