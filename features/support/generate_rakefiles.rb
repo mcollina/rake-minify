@@ -28,20 +28,30 @@ end
 
 def generate_rakefile
   template = <<-EOF
-Rake::Minify.new do |conf|
-  <% groups.values.each do |group| %>
-    <% if group.sources.size == 1 %>
-      add(<%= group.output.inspect %>, <%= group.sources.first.source.inspect %>)
-    <% else %>
-      group(<%= group.output.inspect %>) do |group|
-        <% group.sources.each do |element| %>
-          add(<%= element.source.inspect %>, :minify => <%= element.minify %>)
-        <% end %>
-      end
+Rake::Minify.new do
+  <% if basedir.size > 0 %>
+  dir(File.join(File.dirname(__FILE__), <%= basedir.inspect %>)) do
+  <% end %> 
+    <% groups.values.each do |group| %>
+      <% if group.sources.size == 1 %>
+        add(<%= group.output.inspect %>, <%= group.sources.first.source.inspect %>)
+      <% else %>
+        group(<%= group.output.inspect %>) do |group|
+          <% group.sources.each do |element| %>
+            add(<%= element.source.inspect %>, :minify => <%= element.minify %>)
+          <% end %>
+        end
+      <% end %>
     <% end %>
-  <% end %>
+  <% if basedir.size > 0 %>
+  end
+  <% end %> 
 end
 EOF
   erb = ERB.new(template)
   erb.result(binding)
+end
+
+def basedir(dir="")
+  @basedir ||= dir
 end

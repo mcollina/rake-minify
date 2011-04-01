@@ -9,6 +9,7 @@ class Rake::Minify < Rake::TaskLib
 
   def initialize(&block)
     @sources = {}
+    @dir = nil
 
     instance_eval &block # to be configured like the pros
 
@@ -18,11 +19,17 @@ class Rake::Minify < Rake::TaskLib
   end
 
   def add(output, source, opts = { :minify => true })
-    @sources[output] = Source.new(source, opts[:minify])
+    @sources[build_path(output)] = Source.new(build_path(source), opts[:minify])
   end
 
   def group(output, &block)
-    @sources[output] = Group.new &block
+    @sources[build_path(output)] = Group.new &block
+  end
+
+  def dir(dir, &block)
+    @dir = dir
+    instance_eval &block # to be configured like the pros
+    @dir = nil
   end
 
   def invoke
@@ -31,5 +38,9 @@ class Rake::Minify < Rake::TaskLib
         output << source.build
       end
     end
+  end
+
+  def build_path(file)
+    @dir.nil? && file || File.join(@dir, file)
   end
 end

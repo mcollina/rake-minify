@@ -68,4 +68,24 @@ describe Rake::Minify do
       @output.string.should == "var a=\"hello\";\nvar b=\"hello2\";"
     end
   end
+
+  context "configured to minify a file in a directory" do
+    subject do 
+      Rake::Minify.new do
+        dir("the_dir") do
+          add("output", "source")
+        end
+      end
+    end
+
+    before :each do
+      stub_open("the_dir/source",' var a =     "b"   ;')
+      @output = stub_open("the_dir/output","", "w")
+    end
+
+    it "should minify the input file when invoked" do
+      subject.invoke
+      @output.string.should == "var a=\"b\";"
+    end
+  end
 end

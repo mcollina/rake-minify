@@ -33,3 +33,9 @@ Feature: Minify Javascripts
     And we want to minify the js file "b.js" into "app.js"
     When I run rake minify
     Then "app.js" should include "a.js" and "b.min.js"
+
+  Scenario: Minify single javascript with basedir
+    Given the basedir "public"
+    And we want to minify the js file "a.js" into "a.min.js"
+    When I run rake minify
+    Then "a.min.js" should be minified
