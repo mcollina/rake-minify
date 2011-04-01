@@ -35,7 +35,7 @@ Rake::Minify.new do |conf|
     <% else %>
       group(<%= group.output.inspect %>) do |group|
         <% group.sources.each do |element| %>
-          add(<%= group.sources.first.source.inspect %>, :minify => <%= group.sources.first.minify %>)
+          add(<%= element.source.inspect %>, :minify => <%= element.minify %>)
         <% end %>
       end
     <% end %>

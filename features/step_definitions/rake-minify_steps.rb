@@ -36,20 +36,20 @@ Given /^we want to combine the js file "([^"]*)" into "([^"]*)"$/ do |file, outp
 end
 
 Then /^"([^"]*)" should include "([^"]*)" and "([^"]*)"$/ do |result, source1, source2|
-  expected = ""
-  [source1, source2].each do |s|
+  sources = [source1, source2].map do |s|
     file = File.join(File.dirname(__FILE__), "..", "js-expected", s)
     unless File.exists? file
       file = File.join(File.dirname(__FILE__), "..", "js-sources", s)
     end
 
     open(file) do |e|
-      expected << e.read
+      e.read
     end
   end
 
   open(File.join(@dir, result)) do |result|
-    result.read.should == expected
+    content = result.read
+    sources.each { |s| content.should include(s.gsub(/\n$/,'')) } # this is unfortunate :/
   end
 end
 

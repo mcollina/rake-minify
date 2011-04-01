@@ -15,14 +15,14 @@ Feature: Minify Javascripts
     Then "app.js" should include "a.js" and "b.js"
 
   Scenario: Minify multiple javascripts into a single file
-    Given we want to combine the js file "a.js" into "app.min.js"
-    And we want to combine the js file "b.js" into "app.min.js"
+    Given we want to minify the js file "a.js" into "app.min.js"
+    And we want to minify the js file "b.js" into "app.min.js"
     When I run rake minify
     Then "app.min.js" should include "a.min.js" and "b.min.js"
 
   Scenario: Minify multiple javascripts into multiple files
-    Given we want to combine the js file "a.js" into "app.min.js"
-    And we want to combine the js file "b.js" into "app.min.js"
+    Given we want to minify the js file "a.js" into "app.min.js"
+    And we want to minify the js file "b.js" into "app.min.js"
     And we want to minify the js file "a.js" into "a.min.js"
     When I run rake minify
     Then "app.min.js" should include "a.min.js" and "b.min.js"
