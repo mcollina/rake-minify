@@ -29,8 +29,10 @@ Open your Rakefile and add:
 
   Rake::Minify.new(:minify_multiple) do
     dir("path/to/your/dir") do # we specify only the source directory
-      add("output-multi.js", "first.js") # the output file name is full path
-      add("output-multi.js", "second.js") 
+      group("output-multi.js") do
+        add("first.js") # the output file name is full path
+        add("second.js")
+      end
     end
   end
 
@@ -40,11 +42,12 @@ Open your Rakefile and add:
 
   Rake::Minify.new(:minify_and_combine) do
     dir("path/to/your/dir") do # we specify only the source directory
-      add("output-first-second.js", "first.js", :minify => false) # this file is not minified
-      add("output-first-second.js", "second.js") # this file is minified
+      group("output-first-second.js") do
+        add("first.js", :minify => false) # this file is not minified
+        add("second.js")
+      end
     end
   end
-
 
 == Contributing to rake-minify
  
