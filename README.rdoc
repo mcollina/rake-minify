@@ -54,7 +54,16 @@ Open your Rakefile and add:
 The rake-minify gem now supports even CoffeeScript files to be compiled,
 minified and bundled, just include them like javascript files.
 
-Open your Rakefile and add:
+CoffeeScript support requires the coffe-script gem, so install the gem:
+
+  gem install coffee-script
+
+Or if your are using Bundler:
+
+  echo "gem 'coffee-script'" >> Gemfile
+  bundle install
+
+Then open your Rakefile and add:
 
   Rake::Minify.new(:minify_single) do
     dir("path/to/your/dir") do # we specify only the source directory
