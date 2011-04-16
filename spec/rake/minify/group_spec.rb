@@ -53,5 +53,10 @@ class Rake::Minify
       
       subject.build.should == "aaaa"
     end
+
+    it "should expose its parent dir method" do
+      parent.should_receive(:dir).with("a_dir").and_yield("hello world")
+      (subject.dir("a_dir") { |a| a }).should == "hello world" #weird method to test this
+    end
   end
 end

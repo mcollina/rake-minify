@@ -28,7 +28,7 @@ class Rake::Minify < Rake::TaskLib
 
   def dir(dir, &block)
     @dir = dir
-    instance_eval &block # to be configured like the pros
+    block.call #FIXME @dir should be a stack
     @dir = nil
   end
 

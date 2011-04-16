@@ -46,3 +46,11 @@ Feature: Minify Javascripts
     And we want to minify the js file "b.js" into "app.min.js"
     When I run rake minify
     Then "app.min.js" should include "a.min.js" and "b.min.js"
+
+  @wip
+  Scenario: Minify multiple javascripts with an inner directory
+    Given the inner directory "public"
+    And we want to minify the js file "a.js" into "app.min.js"
+    And we want to minify the js file "b.js" into "app.min.js"
+    When I run rake minify
+    Then "app.min.js" should include "a.min.js" and "b.min.js"

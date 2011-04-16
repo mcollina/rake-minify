@@ -31,7 +31,7 @@ def generate_rakefile
 <%= pre.join("\n") %>
 
 Rake::Minify.new(<%= @name_for_generation %>) do
-  <% if basedir.size > 0 %>
+  <% if basedir %>
   dir(File.join(File.dirname(__FILE__), <%= basedir.inspect %>)) do
   <% end %> 
     <% groups.values.each do |group| %>
@@ -39,13 +39,19 @@ Rake::Minify.new(<%= @name_for_generation %>) do
         add(<%= group.output.inspect %>, <%= group.sources.first.source.inspect %>)
       <% else %>
         group(<%= group.output.inspect %>) do |group|
+          <% if indir %>
+            dir(File.join(File.dirname(__FILE__), <%= indir.inspect %>)) do
+          <% end %> 
           <% group.sources.each do |element| %>
             add(<%= element.source.inspect %>, :minify => <%= element.minify %>)
           <% end %>
+          <% if indir %>
+            end
+          <% end %> 
         end
       <% end %>
     <% end %>
-  <% if basedir.size > 0 %>
+  <% if basedir %>
   end
   <% end %> 
 end
@@ -54,15 +60,20 @@ EOF
   erb.result(binding)
 end
 
-def basedir(dir="")
+def basedir(dir=nil)
   @basedir ||= dir
+end
+
+def indir(dir=nil)
+  @indir ||= dir
 end
 
 def run_task(task_name="minify")
   @dir = Dir.mktmpdir
-  FileUtils.mkdir File.join(@dir, basedir) if basedir.size > 0
+  dest_dir = basedir || indir || ""
+  FileUtils.mkdir File.join(@dir, dest_dir) if dest_dir.size > 0
   Dir.glob(File.join(File.dirname(__FILE__), "..", "js-sources", "*")) do |file|
-    FileUtils.cp(file, File.join(@dir, basedir))
+    FileUtils.cp(file, File.join(@dir, dest_dir))
   end
   rakefile = File.join(@dir, "Rakefile")
   open(rakefile, "w") { |io| io << generate_rakefile }
