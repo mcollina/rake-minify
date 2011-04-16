@@ -5,11 +5,11 @@
 
 Gem::Specification.new do |s|
   s.name = %q{rake-minify}
-  s.version = "0.1.1"
+  s.version = "0.2.0"
 
   s.required_rubygems_version = Gem::Requirement.new(">= 0") if s.respond_to? :required_rubygems_version=
   s.authors = ["Matteo Collina"]
-  s.date = %q{2011-04-06}
+  s.date = %q{2011-04-17}
   s.description = %q{A rake task to minify javascripts}
   s.email = %q{matteo.collina@gmail.com}
   s.extra_rdoc_files = [
@@ -25,10 +25,14 @@ Gem::Specification.new do |s|
     "README.rdoc",
     "Rakefile",
     "VERSION",
+    "features/coffeescript.feature",
     "features/js-expected/a.min.js",
     "features/js-expected/b.min.js",
+    "features/js-expected/c-a.min.js",
     "features/js-sources/a.js",
     "features/js-sources/b.js",
+    "features/js-sources/c-a.coffee",
+    "features/js-sources/c-a.js",
     "features/minify.feature",
     "features/rake-interface.feature",
     "features/step_definitions/rake-minify_steps.rb",
@@ -67,6 +71,7 @@ Gem::Specification.new do |s|
       s.add_development_dependency(%q<test_notifier>, ["~> 0.3.6"])
       s.add_development_dependency(%q<autotest>, ["~> 4.4"])
       s.add_development_dependency(%q<rcov>, [">= 0"])
+      s.add_development_dependency(%q<coffee-script>, [">= 2.2.0"])
     else
       s.add_dependency(%q<jsmin>, ["~> 1.0.1"])
       s.add_dependency(%q<rspec>, ["~> 2.5.0"])
@@ -75,6 +80,7 @@ Gem::Specification.new do |s|
       s.add_dependency(%q<test_notifier>, ["~> 0.3.6"])
       s.add_dependency(%q<autotest>, ["~> 4.4"])
       s.add_dependency(%q<rcov>, [">= 0"])
+      s.add_dependency(%q<coffee-script>, [">= 2.2.0"])
     end
   else
     s.add_dependency(%q<jsmin>, ["~> 1.0.1"])
@@ -84,6 +90,7 @@ Gem::Specification.new do |s|
     s.add_dependency(%q<test_notifier>, ["~> 0.3.6"])
     s.add_dependency(%q<autotest>, ["~> 4.4"])
     s.add_dependency(%q<rcov>, [">= 0"])
+    s.add_dependency(%q<coffee-script>, [">= 2.2.0"])
   end
 end
 
