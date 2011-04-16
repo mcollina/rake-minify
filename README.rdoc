@@ -23,6 +23,8 @@ Open your Rakefile and add:
     end
   end
 
+This task minify the file "path/to/your/dir/source.js" into the file "output.js".
+
 == Minify multiple JavaScript files
 
 Open your Rakefile and add:
@@ -35,6 +37,9 @@ Open your Rakefile and add:
       end
     end
   end
+
+This task packs and minify the files "path/to/your/dir/first.js" and
+"path/to/your/dir/second.js" into the file "output-multi.js".
 
 == Combine only multiple JavaScript files
 
