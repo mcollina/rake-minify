@@ -11,7 +11,7 @@ When /^I run rake minify$/ do
 end
 
 Then /^"([^"]*)" should be minified$/ do |file|
-  open(File.join(@dir, basedir || "", file)) do |result|
+  open(File.join(@dir, file)) do |result|
     open(File.join(File.dirname(__FILE__), "..", "js-expected", file)) do |expected|
       (result.read + "\n").should == expected.read
     end
@@ -34,7 +34,7 @@ Then /^"([^"]*)" should include "([^"]*)" and "([^"]*)"$/ do |result, source1, s
     end
   end
 
-  open(File.join(@dir, basedir || "", result)) do |result|
+  open(File.join(@dir, result)) do |result|
     content = result.read
     sources.each { |s| content.should include(s.gsub(/\n$/,'')) } # this is unfortunate :/
   end

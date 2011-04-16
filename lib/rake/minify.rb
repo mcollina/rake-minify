@@ -11,6 +11,7 @@ class Rake::Minify < Rake::TaskLib
     @sources = {}
     @dir = nil
     @config = block
+    @dir_stack = []
 
     desc "Minifies the specified javascripts" unless Rake.application.last_comment
     task name do
@@ -19,17 +20,19 @@ class Rake::Minify < Rake::TaskLib
   end
 
   def add(output, source, opts = { :minify => true })
-    @sources[build_path(output)] = Source.new(build_path(source), opts[:minify])
+    add_source(output, Source.new(build_path(source), opts[:minify]))
   end
 
   def group(output, &block)
-    @sources[build_path(output)] = Group.new(self, &block)
+    add_source(output, Group.new(self, &block))
   end
 
   def dir(dir, &block)
-    @dir = dir
+    @dir_stack << dir
+    @dir = File.join(@dir_stack)
     block.call #FIXME @dir should be a stack
-    @dir = nil
+    @dir_stack.pop
+    @dir = File.join(@dir_stack)
   end
 
   def invoke
@@ -44,5 +47,10 @@ class Rake::Minify < Rake::TaskLib
 
   def build_path(file)
     @dir.nil? && file || File.join(@dir, file)
+  end
+
+  private
+  def add_source(output, source)
+    @sources[output] = source
   end
 end

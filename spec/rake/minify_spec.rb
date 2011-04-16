@@ -84,12 +84,60 @@ describe Rake::Minify do
 
     before :each do
       stub_open("the_dir/source",' var a =     "b"   ;')
-      @output = stub_open("the_dir/output","", "w")
+      @output = stub_open("output","", "w")
     end
 
     it "should minify the input file when invoked" do
       do_invoke
       @output.string.should == "var a=\"b\";"
+    end
+  end
+
+  context "configured to minify a file in a deep directory" do
+    subject do 
+      Rake::Minify.new do
+        dir("the_dir") do
+          dir("another_dir") do
+            add("output", "source")
+          end
+        end
+      end
+    end
+
+    before :each do
+      stub_open("the_dir/another_dir/source",' var a =     "b"   ;')
+      @output = stub_open("output","", "w")
+    end
+
+    it "should minify the input file when invoked" do
+      do_invoke
+      @output.string.should == "var a=\"b\";"
+    end
+  end
+
+  context "configured to minify multiple files in a deep directory" do
+    subject do 
+      Rake::Minify.new do
+        dir("the_dir") do
+          group("output") do
+            dir("another_dir") do
+              add("a")
+            end
+            add("b")
+          end
+        end
+      end
+    end
+
+    before :each do
+      stub_open("the_dir/another_dir/a",' var a =     "hello"   ;')
+      stub_open("the_dir/b",' var b =     "hello2"   ;')
+      @output = stub_open("output","", "w")
+    end
+
+    it "should minify the input file when invoked" do
+      do_invoke
+      @output.string.should == "var a=\"hello\";\nvar b=\"hello2\";"
     end
   end
 
