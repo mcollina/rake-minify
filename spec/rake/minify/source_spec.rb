@@ -22,5 +22,15 @@ class Rake::Minify
         subject.build.should == ' var a =     "b"   ;'
       end
     end
+
+    context "compile a coffeescript file" do
+      subject { Source.new("a_source.coffee", true) }
+
+      it "should open and minify the file" do
+        input = StringIO.new(' a =     "b"   ')
+        Kernel.stub!(:open).with("a_source.coffee").and_yield(input)
+        subject.build.should == "var a;a=\"b\";"
+      end
+    end
   end
 end

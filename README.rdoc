@@ -29,8 +29,8 @@ Open your Rakefile and add:
 
   Rake::Minify.new(:minify_multiple) do
     dir("path/to/your/dir") do # we specify only the source directory
-      group("output-multi.js") do
-        add("first.js") # the output file name is full path
+      group("output-multi.js") do # the output file name is full path
+        add("first.js")
         add("second.js")
       end
     end
@@ -48,6 +48,20 @@ Open your Rakefile and add:
       end
     end
   end
+
+== CoffeeScript support
+
+The rake-minify gem now supports even CoffeeScript files to be compiled,
+minified and bundled, just include them like javascript files.
+
+Open your Rakefile and add:
+
+  Rake::Minify.new(:minify_single) do
+    dir("path/to/your/dir") do # we specify only the source directory
+      add("output.js", "source.coffee") # the coffee file is compiled and minified
+    end
+  end
+
 
 == Contributing to rake-minify
  

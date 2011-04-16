@@ -22,6 +22,7 @@ Jeweler::Tasks.new do |gem|
   gem.add_development_dependency 'test_notifier', '~> 0.3.6'
   gem.add_development_dependency 'autotest', '~> 4.4'
   gem.add_development_dependency "rcov", ">= 0"
+  gem.add_development_dependency "coffee-script", ">= 2.2.0"
 end
 Jeweler::RubygemsDotOrgTasks.new
 
