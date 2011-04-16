@@ -35,6 +35,9 @@ end
 RSpec::Core::RakeTask.new(:rcov) do |spec|
   spec.pattern = 'spec/**/*_spec.rb'
   spec.rcov = true
+  spec.rcov_opts = ["--text-summary", "--exclude","lib\/rspec,bin\/rspec,lib\/rcov," + 
+             "spec,diff-lcs,lib\/cucumber,lib\/gherkin,cucumber,features,rake-0,coffee,json,execjs,jsmin"]
+
 end
 
 require 'cucumber/rake/task'
