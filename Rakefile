@@ -7,8 +7,8 @@ Jeweler::Tasks.new do |gem|
   gem.name = "rake-minify"
   gem.homepage = "http://github.com/mcollina/rake-minify"
   gem.license = "MIT"
-  gem.summary = %Q{A rake task to minify javascripts}
-  gem.description = %Q{A rake task to minify javascripts}
+  gem.summary = %Q{A rake task to minify javascripts and coffeescripts}
+  gem.description = %Q{A rake task to minify javascripts and coffeescripts}
   gem.email = "matteo.collina@gmail.com"
   gem.authors = ["Matteo Collina"]
   # Include your dependencies below. Runtime dependencies are required when using your gem,

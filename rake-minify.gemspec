@@ -10,7 +10,7 @@ Gem::Specification.new do |s|
   s.required_rubygems_version = Gem::Requirement.new(">= 0") if s.respond_to? :required_rubygems_version=
   s.authors = ["Matteo Collina"]
   s.date = %q{2011-04-17}
-  s.description = %q{A rake task to minify javascripts}
+  s.description = %q{A rake task to minify javascripts and coffeescripts}
   s.email = %q{matteo.collina@gmail.com}
   s.extra_rdoc_files = [
     "LICENSE.txt",
@@ -52,7 +52,7 @@ Gem::Specification.new do |s|
   s.licenses = ["MIT"]
   s.require_paths = ["lib"]
   s.rubygems_version = %q{1.5.3}
-  s.summary = %q{A rake task to minify javascripts}
+  s.summary = %q{A rake task to minify javascripts and coffeescripts}
   s.test_files = [
     "spec/rake/minify/group_spec.rb",
     "spec/rake/minify/source_spec.rb",
