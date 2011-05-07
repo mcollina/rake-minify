@@ -1,1 +1,4 @@
-alert("hello a");
+(function() {
+  var a;
+  a = "hello a";
+}).call(this);

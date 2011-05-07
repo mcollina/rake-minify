@@ -1,5 +1,5 @@
 
-   alert( "hello a" );
+   var a =  "hello a" ;
 
 
 

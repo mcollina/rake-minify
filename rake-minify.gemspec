@@ -9,7 +9,7 @@ Gem::Specification.new do |s|
 
   s.required_rubygems_version = Gem::Requirement.new(">= 0") if s.respond_to? :required_rubygems_version=
   s.authors = ["Matteo Collina"]
-  s.date = %q{2011-04-17}
+  s.date = %q{2011-05-08}
   s.description = %q{A rake task to minify javascripts and coffeescripts}
   s.email = %q{matteo.collina@gmail.com}
   s.extra_rdoc_files = [
@@ -21,6 +21,8 @@ Gem::Specification.new do |s|
     ".document",
     ".rspec",
     ".rvmrc",
+    "Gemfile",
+    "Gemfile.lock",
     "LICENSE.txt",
     "README.rdoc",
     "Rakefile",
@@ -28,9 +30,13 @@ Gem::Specification.new do |s|
     "features/coffeescript.feature",
     "features/js-expected/a.min.js",
     "features/js-expected/b.min.js",
+    "features/js-expected/c-a-bare.min.js",
+    "features/js-expected/c-a-wrapped.min.js",
     "features/js-expected/c-a.min.js",
     "features/js-sources/a.js",
     "features/js-sources/b.js",
+    "features/js-sources/c-a-bare.js",
+    "features/js-sources/c-a-wrapped.js",
     "features/js-sources/c-a.coffee",
     "features/js-sources/c-a.js",
     "features/minify.feature",
@@ -64,6 +70,14 @@ Gem::Specification.new do |s|
     s.specification_version = 3
 
     if Gem::Version.new(Gem::VERSION) >= Gem::Version.new('1.2.0') then
+      s.add_runtime_dependency(%q<rake-minify>, [">= 0"])
+      s.add_development_dependency(%q<rspec>, ["~> 2.5.0"])
+      s.add_development_dependency(%q<cucumber>, [">= 0"])
+      s.add_development_dependency(%q<jeweler>, ["~> 1.5.2"])
+      s.add_development_dependency(%q<test_notifier>, ["~> 0.3.6"])
+      s.add_development_dependency(%q<autotest>, ["~> 4.4"])
+      s.add_development_dependency(%q<rcov>, [">= 0"])
+      s.add_development_dependency(%q<coffee-script>, [">= 2.2.0"])
       s.add_runtime_dependency(%q<jsmin>, ["~> 1.0.1"])
       s.add_development_dependency(%q<rspec>, ["~> 2.5.0"])
       s.add_development_dependency(%q<cucumber>, [">= 0"])
@@ -72,7 +86,16 @@ Gem::Specification.new do |s|
       s.add_development_dependency(%q<autotest>, ["~> 4.4"])
       s.add_development_dependency(%q<rcov>, [">= 0"])
       s.add_development_dependency(%q<coffee-script>, [">= 2.2.0"])
+      s.add_development_dependency(%q<therubyracer>, [">= 0"])
     else
+      s.add_dependency(%q<rake-minify>, [">= 0"])
+      s.add_dependency(%q<rspec>, ["~> 2.5.0"])
+      s.add_dependency(%q<cucumber>, [">= 0"])
+      s.add_dependency(%q<jeweler>, ["~> 1.5.2"])
+      s.add_dependency(%q<test_notifier>, ["~> 0.3.6"])
+      s.add_dependency(%q<autotest>, ["~> 4.4"])
+      s.add_dependency(%q<rcov>, [">= 0"])
+      s.add_dependency(%q<coffee-script>, [">= 2.2.0"])
       s.add_dependency(%q<jsmin>, ["~> 1.0.1"])
       s.add_dependency(%q<rspec>, ["~> 2.5.0"])
       s.add_dependency(%q<cucumber>, [">= 0"])
@@ -81,8 +104,17 @@ Gem::Specification.new do |s|
       s.add_dependency(%q<autotest>, ["~> 4.4"])
       s.add_dependency(%q<rcov>, [">= 0"])
       s.add_dependency(%q<coffee-script>, [">= 2.2.0"])
+      s.add_dependency(%q<therubyracer>, [">= 0"])
     end
   else
+    s.add_dependency(%q<rake-minify>, [">= 0"])
+    s.add_dependency(%q<rspec>, ["~> 2.5.0"])
+    s.add_dependency(%q<cucumber>, [">= 0"])
+    s.add_dependency(%q<jeweler>, ["~> 1.5.2"])
+    s.add_dependency(%q<test_notifier>, ["~> 0.3.6"])
+    s.add_dependency(%q<autotest>, ["~> 4.4"])
+    s.add_dependency(%q<rcov>, [">= 0"])
+    s.add_dependency(%q<coffee-script>, [">= 2.2.0"])
     s.add_dependency(%q<jsmin>, ["~> 1.0.1"])
     s.add_dependency(%q<rspec>, ["~> 2.5.0"])
     s.add_dependency(%q<cucumber>, [">= 0"])
@@ -91,6 +123,7 @@ Gem::Specification.new do |s|
     s.add_dependency(%q<autotest>, ["~> 4.4"])
     s.add_dependency(%q<rcov>, [">= 0"])
     s.add_dependency(%q<coffee-script>, [">= 2.2.0"])
+    s.add_dependency(%q<therubyracer>, [">= 0"])
   end
 end
 

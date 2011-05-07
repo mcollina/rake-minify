@@ -1,2 +1,2 @@
 
-   alert( "hello b" );
+   var b =    "hello b" ;

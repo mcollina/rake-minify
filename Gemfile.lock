@@ -3,6 +3,7 @@ PATH
   specs:
     rake-minify (0.2.1)
       jsmin (~> 1.0.1)
+      rake-minify
 
 GEM
   remote: http://rubygems.org/
@@ -48,6 +49,7 @@ GEM
     term-ansicolor (1.0.5)
     test_notifier (0.3.6)
       notifier
+    therubyracer (0.8.1)
 
 PLATFORMS
   ruby
@@ -61,3 +63,4 @@ DEPENDENCIES
   rcov
   rspec (~> 2.5.0)
   test_notifier (~> 0.3.6)
+  therubyracer

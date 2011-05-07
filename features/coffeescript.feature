@@ -34,7 +34,7 @@ Feature: Compile minify and bundle CoffeeScript files
     And we want to add the file "b.js" into "app.js" with options:
       | minify | false |
     When I run rake minify
-    Then "app.js" should include "c-a-bare.js" and "b.js"
+    Then "app.js" should include "c-a-bare.min.js" and "b.js"
 
   Scenario: Combine multiple coffeescripts into a single file in wrapped mode
     Given we want to add the file "c-a.coffee" into "app.js" with options:
