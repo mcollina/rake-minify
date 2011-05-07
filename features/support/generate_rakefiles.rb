@@ -9,12 +9,12 @@ class Group
     @sources = []
   end
 
-  def add(source, minify)
-    @sources << GroupElement.new(source, minify)
+  def add(source, options)
+    @sources << GroupElement.new(source, options)
   end
 end
 
-GroupElement = Struct.new(:source, :minify)
+GroupElement = Struct.new(:source, :options)
 
 def groups
   @groups ||= Hash.new do |h, k|
@@ -22,8 +22,12 @@ def groups
   end
 end
 
-def add_to_groups(output, minify, file)
-  groups[output].add(file, minify)
+def add_to_groups(output, file, options=nil)
+  options = options.keys.reduce({}) do |hash, key|
+    hash[key.to_sym] = eval(options[key])
+    hash
+  end if options
+  groups[output].add(file, options)
 end
 
 def generate_rakefile
@@ -36,14 +40,14 @@ Rake::Minify.new(<%= @name_for_generation %>) do
   <% end %> 
     <% groups.values.each do |group| %>
       <% if group.sources.size == 1 %>
-        add(<%= group.output.inspect %>, <%= group.sources.first.source.inspect %>)
+        add(<%= group.output.inspect %>, <%= group.sources.first.source.inspect %>, <%= group.sources.first.options.inspect %>)
       <% else %>
         group(<%= group.output.inspect %>) do |group|
           <% if indir %>
             dir(<%= indir.inspect %>) do
           <% end %> 
           <% group.sources.each do |element| %>
-            add(<%= element.source.inspect %>, :minify => <%= element.minify %>)
+            add(<%= element.source.inspect %>, <%= element.options.inspect %>)
           <% end %>
           <% if indir %>
             end

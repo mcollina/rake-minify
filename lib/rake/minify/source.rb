@@ -1,9 +1,11 @@
 class Rake::Minify::Source
   attr_reader :source, :minify
 
-  def initialize(source, minify)
+  def initialize(source, options=nil)
+    options ||= {}
     @source = source
-    @minify = minify
+    @minify = optional_boolean(options[:minify], true)
+    @coffee_bare = optional_boolean(options[:bare], false)
   end
 
   def build
@@ -11,7 +13,7 @@ class Rake::Minify::Source
 
     Kernel.open(source) do |input|
       output = input.read
-      output = CoffeeScript.compile(output, :bare => true) if coffee? #TODO make bare configurable
+      output = CoffeeScript.compile(output, :bare => @coffee_bare) if coffee?
       output = JSMin.minify(output).strip if minify 
       output
     end
@@ -29,5 +31,11 @@ class Rake::Minify::Source
       raise "Missing coffee-script gem"
       exit 1
     end
+  end
+
+  def optional_boolean(value, default)
+    return true if value
+    return default if value.nil?
+    value
   end
 end

@@ -4,7 +4,7 @@ Feature: Rake Interface
   Wants to customize the minify task 
 
   Background:
-    Given we want to minify the js file "a.js" into "a.min.js"
+    Given we want to add the file "a.js" into "a.min.js"
 
   Scenario: Custom name for the task
     Given I have configured rake to minify at the ":my_minify" command

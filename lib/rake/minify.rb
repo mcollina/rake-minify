@@ -20,7 +20,7 @@ class Rake::Minify < Rake::TaskLib
   end
 
   def add(output, source, opts = { :minify => true })
-    add_source(output, Source.new(build_path(source), opts[:minify]))
+    add_source(output, Source.new(build_path(source), opts))
   end
 
   def group(output, &block)

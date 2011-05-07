@@ -13,7 +13,7 @@ class Rake::Minify
 
     def build_source(source_name, minify, stubs = {})
       source = double("source", stubs)
-      Source.stub!(:new).with(source_name, minify).and_return(source)
+      Source.stub!(:new).with(source_name, :minify => minify).and_return(source)
       source
     end
 
@@ -26,12 +26,12 @@ class Rake::Minify
     end
 
     it "should create a new source with the passed args when calling add" do
-      Source.should_receive(:new).with("something", false)
+      Source.should_receive(:new).with("something", :minify => false)
       subject.add("something", :minify => false)
     end
 
     it "should create a new source with the passed single arg when calling add" do
-      Source.should_receive(:new).with("another", true)
+      Source.should_receive(:new).with("another", :minify => true)
       subject.add("another")
     end
 

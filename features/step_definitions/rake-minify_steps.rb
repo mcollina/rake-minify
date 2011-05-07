@@ -2,8 +2,12 @@ require 'fileutils'
 require 'tmpdir'
 require 'rake'
 
-Given /^we want to minify the js file "([^"]*)" into "([^"]*)"$/ do |file, output|
-  add_to_groups(output, true, file)
+Given /^we want to add the file "([^"]*)" into "([^"]*)"$/ do |file, output|
+  add_to_groups(output, file, nil)
+end
+
+Given /^we want to add the file "([^"]*)" into "([^"]*)" with options:$/ do |file, output, options|
+  add_to_groups(output, file, options.rows_hash)
 end
 
 When /^I run rake minify$/ do
@@ -16,10 +20,6 @@ Then /^"([^"]*)" should be minified$/ do |file|
       (result.read + "\n").should == expected.read
     end
   end
-end
-
-Given /^we want to combine the js file "([^"]*)" into "([^"]*)"$/ do |file, output|
-  add_to_groups(output, false, file)
 end
 
 Then /^"([^"]*)" should include "([^"]*)" and "([^"]*)"$/ do |result, source1, source2|
