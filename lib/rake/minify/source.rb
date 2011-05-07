@@ -29,7 +29,6 @@ class Rake::Minify::Source
       require 'coffee-script'
     rescue
       raise "Missing coffee-script gem"
-      exit 1
     end
   end
 
