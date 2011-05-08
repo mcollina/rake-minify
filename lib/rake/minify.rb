@@ -39,6 +39,8 @@ class Rake::Minify < Rake::TaskLib
     instance_eval &@config # to be configured like the pros
 
     @sources.each do |dest, source|
+      FileUtils.mkdir_p(File.dirname(dest))
+
       Kernel.open(dest, "w") do |output|
         output << source.build
       end

@@ -66,3 +66,13 @@ Feature: Minify Javascripts
     And we want to add the file "b.js" into "app.min.js"
     When I run rake minify
     Then "app.min.js" should include "a.min.js" and "b.min.js"
+
+  Scenario: Minify single javascript with a destination directory
+    Given we want to add the file "a.js" into "build/a.min.js"
+    When I run rake minify
+    Then "build/a.min.js" should include "a.min.js"
+
+  Scenario: Minify single javascript with a deep destination directory
+    Given we want to add the file "a.js" into "a/dir/a.min.js"
+    When I run rake minify
+    Then "a/dir/a.min.js" should include "a.min.js"

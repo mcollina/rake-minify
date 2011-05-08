@@ -15,6 +15,10 @@ describe Rake::Minify do
     subject.invoke
   end
 
+  before :each do
+    FileUtils.stub!(:mkdir_p)
+  end
+
   context "configured to minify a single file" do
     subject do 
       Rake::Minify.new do
@@ -115,7 +119,7 @@ describe Rake::Minify do
     end
   end
 
-  context "configured to minify multiple files in a deep directory" do
+  context "configured to minify multiple files in multiple directories" do
     subject do 
       Rake::Minify.new do
         dir("the_dir") do
@@ -139,6 +143,29 @@ describe Rake::Minify do
       do_invoke
       @output.string.should == "var a=\"hello\";\nvar b=\"hello2\";"
     end
+  end
+
+  context "configured to minify a single file with an output in a deep directory" do
+    subject do 
+      Rake::Minify.new do
+        add("an/output_dir/file", "source")
+      end
+    end
+
+    before :each do
+      stub_open("source",' var a =     "b"   ;')
+      @output = stub_open("an/output_dir/file","", "w")
+    end
+
+    it "should minify the input file when invoked" do
+      do_invoke
+      @output.string.should == "var a=\"b\";"
+    end
+
+    it "should create the destination directoy" do
+      FileUtils.should_receive(:mkdir_p).with("an/output_dir")
+      do_invoke
+    end 
   end
 
   it "should accepts arguments" do

@@ -22,8 +22,10 @@ Then /^"([^"]*)" should be minified$/ do |file|
   end
 end
 
-Then /^"([^"]*)" should include "([^"]*)" and "([^"]*)"$/ do |result, source1, source2|
-  sources = [source1, source2].map do |s|
+Then /^"([^"]*)" should include "([^"]*)"(?: and "([^"]*)")?$/ do |result, source1, source2|
+  sources = [source1]
+  sources << source2 if source2
+  sources.map! do |s|
     file = File.join(File.dirname(__FILE__), "..", "js-expected", s)
     unless File.exists? file
       file = File.join(File.dirname(__FILE__), "..", "js-sources", s)
