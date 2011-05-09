@@ -76,6 +76,19 @@ Then open your Rakefile and add:
     end
   end
 
+=== Bare mode
+
+Since version 0.3.0 rake-minify support the configuration of the coffee script bare switch
+(see http://jashkenas.github.com/coffee-script/#installation for details).
+However in the 0.2.x series that flag was assumed as true, now it defaults to false.
+
+You can specify it:
+
+  Rake::Minify.new(:minify_single) do
+    # the coffee file is compiled and minified without the
+    # without the top-level function safety wrapper.
+    add("output.js", "source.coffee", :bare => true) 
+  end
 
 == Contributing to rake-minify
  
