@@ -1,8 +1,9 @@
 PATH
   remote: .
   specs:
-    rake-minify (0.2.1)
+    rake-minify (0.3.1)
       jsmin (~> 1.0.1)
+      rake (= 0.8.7)
       rake-minify
 
 GEM
