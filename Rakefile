@@ -16,7 +16,7 @@ Jeweler::Tasks.new do |gem|
   #  gem.add_runtime_dependency 'jabber4r', '> 0.1'
   #  gem.add_development_dependency 'rspec', '> 1.2.3'
   gem.add_dependency "jsmin", "~> 1.0.1"
-  gem.add_dependency "rake", "= 0.8.7"
+  gem.add_dependency "rake", ">= 0.8.7"
   gem.add_development_dependency "rspec", "~> 2.5.0"
   gem.add_development_dependency "cucumber", ">= 0"
   gem.add_development_dependency "jeweler", "~> 1.5.2"
