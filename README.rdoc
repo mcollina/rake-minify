@@ -1,6 +1,6 @@
 = rake-minify
 
-Rake Minify is an exetremely simple solution for minifying javascript files using a rake task.
+Rake Minify is an exetremely simple solution for minifying javascript and coffeescript files using a rake task.
 
 == Installation
 
@@ -17,6 +17,7 @@ Or if your are using Bundler:
 
 Open your Rakefile and add:
 
+  require 'rake/minify'
   Rake::Minify.new(:minify_single) do
     dir("path/to/your/dir") do # we specify only the source directory
       add("output.js", "source.js") # the output file name is full path
@@ -29,6 +30,7 @@ This task minify the file "path/to/your/dir/source.js" into the file "output.js"
 
 Open your Rakefile and add:
 
+  require 'rake/minify'
   Rake::Minify.new(:minify_multiple) do
     dir("path/to/your/dir") do # we specify only the source directory
       group("output-multi.js") do # the output file name is full path
@@ -45,6 +47,7 @@ This task packs and minify the files "path/to/your/dir/first.js" and
 
 Open your Rakefile and add:
 
+  require 'rake/minify'
   Rake::Minify.new(:minify_and_combine) do
     dir("path/to/your/dir") do # we specify only the source directory
       group("output-first-second.js") do
@@ -70,6 +73,7 @@ Or if your are using Bundler:
 
 Then open your Rakefile and add:
 
+  require 'rake/minify'
   Rake::Minify.new(:minify_single) do
     dir("path/to/your/dir") do # we specify only the source directory
       add("output.js", "source.coffee") # the coffee file is compiled and minified
@@ -84,6 +88,7 @@ However in the 0.2.x series that flag defaulted to true, now it defaults to fals
 
 You can specify it:
 
+  require 'rake/minify'
   Rake::Minify.new(:minify_single) do
     # the coffee file is compiled and minified
     # without the top-level function safety wrapper.
