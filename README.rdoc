@@ -2,6 +2,8 @@
 
 Rake Minify is an exetremely simple solution for minifying javascript and coffeescript files using a rake task.
 
+{<img src="https://secure.travis-ci.org/mcollina/rake-minify.png?branch=master" alt="Build Status" />}[http://travis-ci.org/mcollina/rake-minify]
+
 == Installation
 
 First, install the gem:
