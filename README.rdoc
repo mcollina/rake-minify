@@ -1,6 +1,6 @@
 = rake-minify
 
-Rake Minify is an exetremely simple solution for minifying javascript and coffeescript files using a rake task.
+Rake Minify is an extremely simple solution for minifying javascript and coffeescript files using a rake task.
 
 {<img src="https://secure.travis-ci.org/mcollina/rake-minify.png?branch=master" alt="Build Status" />}[http://travis-ci.org/mcollina/rake-minify]
 
