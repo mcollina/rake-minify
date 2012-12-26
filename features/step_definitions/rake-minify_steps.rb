@@ -27,18 +27,22 @@ Then /^"([^"]*)" should include "([^"]*)"(?: and "([^"]*)")?$/ do |result, sourc
   sources << source2 if source2
   sources.map! do |s|
     file = File.join(File.dirname(__FILE__), "..", "js-expected", s)
+    minified = true
     unless File.exists? file
       file = File.join(File.dirname(__FILE__), "..", "js-sources", s)
+      minified = false
     end
 
     open(file) do |e|
-      e.read
+      r = e.read
+      r.gsub!(/\n$/, '') if minified
+      r
     end
   end
 
   open(File.join(@dir, result)) do |result|
     content = result.read
-    sources.each { |s| content.should include(s.gsub(/\n$/,'')) } # this is unfortunate :/
+    sources.each { |s| content.should include(s) }
   end
 end
 
