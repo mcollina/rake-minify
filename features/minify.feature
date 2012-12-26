@@ -76,3 +76,44 @@ Feature: Minify Javascripts
     Given we want to add the file "a.js" into "a/dir/a.min.js"
     When I run rake minify
     Then "a/dir/a.min.js" should include "a.min.js"
+
+  Scenario: Minify single javascript built by ruby
+    Given we want to add the following javascript into "a.min.js":
+      """
+        a = "a"
+        "var a =  \"hello #{a}\" ;"
+
+
+
+
+      """
+    When I run rake minify
+    Then "a.min.js" should be minified
+
+
+  Scenario: Minify single coffeescript built by ruby
+    Given we want to add the following coffeescript into "c-a-wrapped.min.js":
+      """
+        a = "a"
+        "a =  \"hello #{a}\""
+
+
+
+
+      """
+    When I run rake minify
+    Then "c-a-wrapped.min.js" should be minified
+
+  Scenario: Minify multiple javascripts built by ruby
+    Given we want to add the following javascript into "app.min.js":
+      """
+        a = "a"
+        "var a =  \"hello #{a}\" ;"
+
+
+
+
+      """
+    And we want to add the file "b.js" into "app.min.js"
+    When I run rake minify
+    Then "app.min.js" should include "a.min.js" and "b.min.js"

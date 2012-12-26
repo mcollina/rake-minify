@@ -174,4 +174,23 @@ describe Rake::Minify do
       add("output", "source")
     end
   end
+
+  context "configured to minify the passed JS" do
+    subject do 
+      Rake::Minify.new do
+        add("output") do
+          ' var a =     "b"   ;'
+        end
+      end
+    end
+
+    before :each do
+      @output = stub_open("output","", "w")
+    end
+
+    it "should minify the input file when invoked" do
+      do_invoke
+      @output.string.should == "var a=\"b\";"
+    end
+  end
 end

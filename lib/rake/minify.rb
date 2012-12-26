@@ -19,8 +19,19 @@ class Rake::Minify < Rake::TaskLib
     end
   end
 
-  def add(output, source, opts = { :minify => true })
-    add_source(output, Source.new(build_path(source), opts))
+  def add(output, *args, &block)
+    source = opts = nil
+
+    if block.nil?
+      source = build_path(args.shift)
+    else
+      source = block
+    end
+
+    opts = args.shift
+    opts ||= { :minify => true }
+
+    add_source(output, Source.new(source, opts, &block))
   end
 
   def group(output, &block)

@@ -9,12 +9,12 @@ class Group
     @sources = []
   end
 
-  def add(source, options)
-    @sources << GroupElement.new(source, options)
+  def add(source, options, block)
+    @sources << GroupElement.new(source, options, block)
   end
 end
 
-GroupElement = Struct.new(:source, :options)
+GroupElement = Struct.new(:source, :options, :block)
 
 def groups
   @groups ||= Hash.new do |h, k|
@@ -22,12 +22,12 @@ def groups
   end
 end
 
-def add_to_groups(output, file, options=nil)
+def add_to_groups(output, file, options=nil, block=nil)
   options = options.keys.reduce({}) do |hash, key|
     hash[key.to_sym] = eval(options[key])
     hash
   end if options
-  groups[output].add(file, options)
+  groups[output].add(file, options, block)
 end
 
 def generate_rakefile
@@ -40,14 +40,26 @@ Rake::Minify.new(<%= @name_for_generation %>) do
   <% end %> 
     <% groups.values.each do |group| %>
       <% if group.sources.size == 1 %>
-        add(<%= group.output.inspect %>, <%= group.sources.first.source.inspect %>, <%= group.sources.first.options.inspect %>)
+        <% if group.sources.first.source %>
+          add(<%= group.output.inspect %>, <%= group.sources.first.source.inspect %>, <%= group.sources.first.options.inspect %>)
+        <% else %>
+          add(<%= group.output.inspect %>, <%= group.sources.first.options.inspect %>) do
+            <%= group.sources.first.block %>
+          end
+        <% end %>
       <% else %>
         group(<%= group.output.inspect %>) do |group|
           <% if indir %>
             dir(<%= indir.inspect %>) do
           <% end %> 
           <% group.sources.each do |element| %>
-            add(<%= element.source.inspect %>, <%= element.options.inspect %>)
+            <% if element.source %>
+              add(<%= element.source.inspect %>, <%= element.options.inspect %>)
+            <% else %>
+              add(<%= element.options.inspect %>) do
+                <%= element.block %>
+              end
+            <% end %>
           <% end %>
           <% if indir %>
             end

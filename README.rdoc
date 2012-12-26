@@ -97,6 +97,39 @@ You can specify it:
     add("output.js", "source.coffee", :bare => true)
   end
 
+== Combine from ruby block
+
+With a single file:
+
+  require 'rake/minify'
+  Rake::Minify.new(:minify_single) do
+    dir("path/to/your/dir") do # we specify only the source directory
+      add("output.js") do
+        # this is evaluated during the build
+        "var a = 'hello js!'"
+      end 
+    end
+  end
+
+With a group:
+
+  require 'rake/minify'
+  Rake::Minify.new(:minify_and_combine) do
+    dir("path/to/your/dir") do # we specify only the source directory
+      group("output-first-second.js") do
+        add(:minify => false) do
+          # this is evaluated during the build
+          "var a = 'hello js!'"
+        end 
+
+        add(:coffeescript => true) do
+          # this is evaluated as coffescript
+          "(a -> 'hello coffee!')()"
+        end
+      end
+    end
+  end
+
 == Contributing to rake-minify
  
 * Check out the latest master to make sure the feature hasn't been implemented or the bug hasn't been fixed yet

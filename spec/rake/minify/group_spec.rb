@@ -54,6 +54,19 @@ class Rake::Minify
       subject.build.should == "aaaa"
     end
 
+    it "should accept add inside the block passed to new" do
+      source = double("source", :build => "aaaa")
+      Source.stub!(:new).with(kind_of(Proc), :minify => false).and_return(source)
+
+      subject = Group.new(parent) do
+        add(:minify => false) do
+          # in this spec, this is not called
+        end
+      end
+      
+      subject.build.should == "aaaa"
+    end
+
     it "should expose its parent dir method" do
       parent.should_receive(:dir).with("a_dir").and_yield("hello world")
       (subject.dir("a_dir") { |a| a }).should == "hello world" #weird method to test this

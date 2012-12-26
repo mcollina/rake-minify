@@ -65,3 +65,12 @@ end
 Given /^the inner directory "([^"]*)"$/ do |dir|
   indir(dir)
 end
+
+Given /^we want to add the following javascript into "(.*?)":$/ do |output, string|
+  add_to_groups(output, nil, {}, string)
+end
+ 
+Given /^we want to add the following coffeescript into "(.*?)":$/ do |output, string|
+  add_to_groups(output, nil, { :coffeescript => "true" }, string)
+end
+

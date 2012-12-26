@@ -10,9 +10,17 @@ class Rake::Minify
       instance_eval &block if block
     end
 
-    def add(source, opts=nil)
+    def add(*args, &block)
+      if block
+        source = block
+      else
+        source = parent.build_path(args.shift)
+      end
+
+      opts = args.shift
       opts ||= { :minify => true }
-      @sources << Source.new(parent.build_path(source), opts)
+
+      @sources << Source.new(source, opts)
     end
 
     def build

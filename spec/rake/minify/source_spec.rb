@@ -13,6 +13,26 @@ class Rake::Minify
       end
     end
 
+    context "configured with a block" do
+      subject do 
+        Source.new(lambda { ' var a =     "b"   ;' }, :minify => true)
+      end
+
+      it "should minify the result of the block" do
+        subject.build.should == "var a=\"b\";"
+      end
+    end
+
+    context "configured with a block and forcing the source to be some coffeescript" do
+      subject do 
+        Source.new(lambda { ' a =     "b"   ' }, :minify => true, :coffeescript => true, :bare => true)
+      end
+
+      it "should minify the result of the block" do
+        subject.build.should == "var a;a=\"b\";"
+      end
+    end
+
     context "configured to open 'another_source' and to not minify it" do
       subject { Source.new("another_source", :minify => false) }
 

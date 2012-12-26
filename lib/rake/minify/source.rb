@@ -6,21 +6,26 @@ class Rake::Minify::Source
     @source = source
     @minify = optional_boolean(options[:minify], true)
     @coffee_bare = optional_boolean(options[:bare], false)
+    @coffee = options[:coffeescript]
   end
 
   def build
     coffee_script! if coffee?
 
-    Kernel.open(source) do |input|
-      output = input.read
-      output = CoffeeScript.compile(output, :bare => @coffee_bare) if coffee?
-      output = JSMin.minify(output).strip if minify 
-      output
+    if source.respond_to? :call
+      output = source.call
+    else
+      output = Kernel.open(source) { |input| input.read }
     end
+
+    output = CoffeeScript.compile(output, :bare => @coffee_bare) if coffee?
+    output = JSMin.minify(output).strip if minify
+
+    output
   end
 
   def coffee?
-    source =~ /\.coffee$/
+    source =~ /\.coffee$/ or @coffee
   end
 
   private
