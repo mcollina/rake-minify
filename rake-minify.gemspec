@@ -30,4 +30,5 @@ Gem::Specification.new do |gem|
 
   gem.add_development_dependency("coffee-script", ">= 2.2.0")
   gem.add_development_dependency("therubyracer")
+  gem.add_development_dependency("rdoc", "~> 3.12")
 end
