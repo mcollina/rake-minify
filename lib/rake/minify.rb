@@ -4,11 +4,8 @@ require 'jsmin'
 
 class Rake::Minify < Rake::TaskLib
 
-  VERSION = "0.4.0"
-
   autoload :Source, "rake/minify/source"
   autoload :Group, "rake/minify/group"
-  autoload :VERSION, "rake/minify/version"
 
   def initialize(name=:minify, &block)
     @sources = {}

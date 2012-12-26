@@ -20,8 +20,7 @@ task :default => [:features, :spec]
 
 require 'rdoc/task'
 Rake::RDocTask.new do |rdoc|
-  require "rake/minify"
-  version = Rake::Minify::VERSION
+  version = File.read "VERSION"
 
   rdoc.rdoc_dir = 'rdoc'
   rdoc.title = "rake-minify #{version}"

@@ -1,11 +1,10 @@
 # -*- encoding: utf-8 -*-
 lib = File.expand_path('../lib', __FILE__)
 $LOAD_PATH.unshift(lib) unless $LOAD_PATH.include?(lib)
-require 'rake/minify'
 
 Gem::Specification.new do |gem|
   gem.name          = "rake-minify"
-  gem.version       = Rake::Minify::VERSION
+  gem.version       = File.read "VERSION"
   gem.authors       = ["Matteo Collina"]
   gem.email         = ["hello@matteocollina.com"]
   gem.description   = %q{A rake task to minify javascripts and coffeescripts}
