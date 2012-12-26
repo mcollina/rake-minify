@@ -1,2 +1,1 @@
-
 require 'rake/minify'

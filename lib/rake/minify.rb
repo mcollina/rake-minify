@@ -4,8 +4,11 @@ require 'jsmin'
 
 class Rake::Minify < Rake::TaskLib
 
+  VERSION = "0.4.0"
+
   autoload :Source, "rake/minify/source"
   autoload :Group, "rake/minify/group"
+  autoload :VERSION, "rake/minify/version"
 
   def initialize(name=:minify, &block)
     @sources = {}
@@ -36,7 +39,7 @@ class Rake::Minify < Rake::TaskLib
   end
 
   def invoke
-    instance_eval &@config # to be configured like the pros
+    instance_eval(&@config) # to be configured like the pros
 
     @sources.each do |dest, source|
       FileUtils.mkdir_p(File.dirname(dest))

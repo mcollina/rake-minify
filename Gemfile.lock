@@ -1,5 +1,12 @@
+PATH
+  remote: .
+  specs:
+    rake-minify (0.4.0)
+      jsmin (~> 1.0.1)
+      rake (>= 0.8.7)
+
 GEM
-  remote: http://rubygems.org/
+  remote: https://rubygems.org/
   specs:
     ZenTest (4.5.0)
     autotest (4.4.6)
@@ -20,17 +27,12 @@ GEM
       multi_json (~> 1.0)
     gherkin (2.9.0)
       json (>= 1.4.6)
-    git (1.2.5)
-    jeweler (1.5.2)
-      bundler (~> 1.0.0)
-      git (>= 1.2.5)
-      rake
     jsmin (1.0.1)
     json (1.6.5)
     libv8 (3.3.10.4)
     multi_json (1.0.3)
     notifier (0.1.3)
-    rake (0.9.0)
+    rake (10.0.3)
     rcov (0.9.9)
     rspec (2.5.0)
       rspec-core (~> 2.5.0)
@@ -53,9 +55,7 @@ DEPENDENCIES
   autotest (~> 4.4)
   coffee-script (>= 2.2.0)
   cucumber
-  jeweler (~> 1.5.2)
-  jsmin (~> 1.0.1)
-  rake (>= 0.8.7)
+  rake-minify!
   rcov
   rspec (~> 2.5.0)
   test_notifier (~> 0.3.6)
